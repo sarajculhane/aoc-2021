@@ -23,8 +23,6 @@ func parseFile() []string {
 func getPosition(arr []string) int {
 	dirMap := map[string]int{"depth": 0, "horizontal": 0}
 
-	dirMap["horizontal"] = 0
-
 	for _, val := range arr {
 		direction := strings.Split(val, " ")
 		num, err := strconv.Atoi(direction[1])
@@ -72,6 +70,6 @@ func getPositionWithAim(arr []string) int {
 func main() {
 	data := parseFile()
 
-	getPositionWithAim((data))
+	getPosition((data))
 	getPositionWithAim(data)
 }
