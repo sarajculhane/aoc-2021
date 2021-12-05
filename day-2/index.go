@@ -21,9 +21,8 @@ func parseFile() []string {
 }
 
 func getPosition(arr []string) int {
-	dirMap := make(map[string]int)
+	dirMap := map[string]int{"depth": 0, "horizontal": 0}
 
-	dirMap["depth"] = 0
 	dirMap["horizontal"] = 0
 
 	for _, val := range arr {
@@ -32,7 +31,7 @@ func getPosition(arr []string) int {
 		if err != nil {
 			panic(err)
 		}
-		fmt.Println(num, val, dirMap)
+
 		switch direction[0] {
 		case "forward":
 			dirMap["horizontal"] += num
@@ -46,7 +45,33 @@ func getPosition(arr []string) int {
 	return dirMap["horizontal"] * dirMap["depth"]
 }
 
+func getPositionWithAim(arr []string) int {
+	dirMap := map[string]int{"depth": 0, "horizontal": 0, "aim": 0}
+
+	for _, val := range arr {
+		direction := strings.Split(val, " ")
+		num, err := strconv.Atoi(direction[1])
+		if err != nil {
+			panic(err)
+		}
+
+		switch direction[0] {
+		case "forward":
+			dirMap["horizontal"] += num
+			dirMap["depth"] += num * dirMap["aim"]
+		case "down":
+			dirMap["aim"] += num
+		case "up":
+			dirMap["aim"] -= num
+		}
+	}
+
+	return dirMap["horizontal"] * dirMap["depth"]
+}
+
 func main() {
 	data := parseFile()
-	getPosition(data)
+
+	getPositionWithAim((data))
+	getPositionWithAim(data)
 }
