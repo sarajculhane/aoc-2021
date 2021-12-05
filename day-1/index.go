@@ -38,8 +38,24 @@ func getMeasurement(data []int) int {
 	return count
 }
 
+func getSumThreeMeasurement(data []int) int {
+	total, currentSum, prevSum := 0, 0, 0
+
+	for i := 0; i < len(data)-3; i++ {
+		currentSum = data[i] + data[i+1] + data[i+2]
+
+		if currentSum > prevSum {
+			total += 1
+		}
+		prevSum = currentSum
+	}
+	return total
+}
+
 func main() {
 	data := parseFile()
 
 	getMeasurement(data)
+	getSumThreeMeasurement(data)
+
 }
