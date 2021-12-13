@@ -19,8 +19,10 @@ func parseFile() []string {
 	return arr
 }
 
-func toBinaryNumber(val string) int64 {
-	output, err := strconv.ParseInt(val, 2, 64)
+type BinaryNumber string
+
+func (val BinaryNumber) toBinaryNumber() int64 {
+	output, err := strconv.ParseInt(string(val), 2, 64)
 
 	if err != nil {
 		fmt.Println(err)
@@ -32,7 +34,7 @@ func getGammaAndEpsilon(arr []string) int64 {
 
 	bitLen := len(strings.Split(arr[0], ""))
 	bitArr := make([]int, bitLen)
-	gamma, epsilon := "", ""
+	var gamma, epsilon BinaryNumber = "", ""
 
 	for _, bit := range arr {
 		bits := strings.Split(bit, "")
@@ -56,7 +58,7 @@ func getGammaAndEpsilon(arr []string) int64 {
 			epsilon += "1"
 		}
 	}
-	return toBinaryNumber(gamma) * toBinaryNumber(epsilon)
+	return gamma.toBinaryNumber() * epsilon.toBinaryNumber()
 
 }
 
